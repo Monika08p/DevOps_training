@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Student Profile</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial;
+    background: linear-gradient(135deg, #0f2027, #2c5364);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    width: 600px;
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    animation: fadeIn 1s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px);}
+    to { opacity: 1; transform: translateY(0);}
+}
+
+h1 {
+    text-align: center;
+    color: #007BFF;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    transition: 0.3s;
+}
+
+input:focus, select:focus {
+    border-color: #007BFF;
+    box-shadow: 0 0 8px #007BFF;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #0056b3;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h1>Student Profile</h1>
+
+<input id="name" placeholder="Name">
+<input id="email" placeholder="Email">
+<input id="phone" placeholder="Phone Number">
+
+<select id="gender">
+<option>Male</option>
+<option>Female</option>
+</select>
+
+<select id="year">
+<option>1st Year</option>
+<option>2nd Year</option>
+<option>3rd Year</option>
+<option>4th Year</option>
+</select>
+
+<input id="college" placeholder="College Name">
+<input id="course" placeholder="Course">
+<input id="domain" placeholder="Domain Interest">
+
+<button onclick="submitData()">Submit</button>
+</div>
+
+<script>
+async function submitData() {
+    try {
+        alert("Submitting...");
+
+        let data = {
+            name: document.getElementById("name").value,
+            college: document.getElementById("college").value,
+            email: document.getElementById("email").value,
+            phone: document.getElementById("phone").value,
+            department: document.getElementById("course").value,
+            gender: document.getElementById("gender").value,
+            interest: document.getElementById("domain").value
+        };
+
+        let res = await fetch("/api/submit", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        });
+
+        if (!res.ok) throw new Error("Failed");
+
+        alert("Saved to DATABASE ✅");
+
+        window.location.href = "/view.html";
+
+    } catch (err) {
+        console.error(err);
+        alert("Error occurred!");
+    }
+}
+</script>
+
+</body>
+</html>
